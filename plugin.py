@@ -78,7 +78,7 @@ class BasePlugin:
         DumpHTTPResponseToLog(Data)
         Status = int(Data["Status"])
         if Status == 200:
-            Domoticz.Log("Good response received")
+            Domoticz.Debug("Good response received")
             strData = Data["Data"].decode("utf-8", "ignore")
             root = ET.fromstring(strData)
             desc = root.findtext("./channel/item[1]/description")
