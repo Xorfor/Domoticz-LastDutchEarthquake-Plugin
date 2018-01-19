@@ -2,7 +2,7 @@
 This plugin shows information of the last earthquake in the Netherlands.
 
 ## Source
-This information comes from the KNMI
+This information comes from the [KNMI](http://www.knmi.nl/nederland-nu/seismologie/aardbevingen/laatste_beving)
 
 ## Parameters
 None
