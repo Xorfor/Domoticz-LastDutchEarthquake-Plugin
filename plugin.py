@@ -72,6 +72,15 @@ class BasePlugin:
         Domoticz.Debug("onConnect called")
         if (Status == 0):
             Domoticz.Debug("Connected successfully.")
+            sendData = {'Verb': 'GET',
+                        'URL': self.__API_URL,
+                        'Headers': {'Content-Type': 'text/xml; charset=utf-8', \
+                                    'Connection': 'keep-alive', \
+                                    'Accept': 'Content-Type: text/html; charset=UTF-8', \
+                                    'Host': self.__API_ADDRESS, \
+                                    'User-Agent': 'Domoticz/1.0'}
+                        }
+            self.__rssConn.Send(sendData)
 
     def onMessage(self, Connection, Data):
         Domoticz.Debug("onMessage called")
@@ -110,6 +119,7 @@ class BasePlugin:
                   "Depth: " + diepte
             #UpdateDeviceName(self.__UNIT_TEXT, plaats)
             UpdateDevice(self.__UNIT_TEXT, 0, txt)
+            self.__rssConn.Disconnect()
         elif Status == 302:
             Domoticz.Log("Page Moved Error.")
         elif Status == 400:
@@ -118,14 +128,13 @@ class BasePlugin:
             Domoticz.Error("Server Error.")
         else:
             Domoticz.Error("Returned a status: "+str(Status))
-        # Parse XML
 
     def onCommand(self, Unit, Command, Level, Hue):
         Domoticz.Debug("onCommand called for Unit " + str(Unit) + ": Parameter '" + str(Command) + "', Level: " + str(Level))
 
     def onNotification(self, Name, Subject, Text, Status, Priority, Sound, ImageFile):
-        Domoticz.Debug("Notification: " + Name + "," + Subject + "," + Text + "," + Status + "," + str(
-            Priority) + "," + Sound + "," + ImageFile)
+        Domoticz.Debug("Notification: " + Name + "," + Subject + "," + Text + "," + Status + "," +
+                       str(Priority) + "," + Sound + "," + ImageFile)
 
     def onDisconnect(self, Connection):
         Domoticz.Debug("onDisconnect called")
@@ -133,26 +142,17 @@ class BasePlugin:
     def onHeartbeat(self):
         Domoticz.Debug("onHeartbeat called")
         self.__runAgain -= 1
-        if self.__runAgain <= 0:
-            self.__runAgain = self.__HEARTBEATS2MIN * self.__MINUTES
-            # Execute your command
-            if self.__rssConn.Connecting():
-                Domoticz.Debug("onHeartbeat called, Connectiong.")
-            elif self.__rssConn.Connected():
-                Domoticz.Debug("onHeartbeat called, Connection is alive.")
-                sendData = { 'Verb' : 'GET',
-                             'URL'  : self.__API_URL,
-                             'Headers' : { 'Content-Type': 'text/xml; charset=utf-8', \
-                                           'Connection': 'keep-alive', \
-                                           'Accept': 'Content-Type: text/html; charset=UTF-8', \
-                                           'Host': self.__API_ADDRESS, \
-                                           'User-Agent':'Domoticz/1.0' }
-                           }
-                self.__rssConn.Send(sendData)
-            else:
-                self.__rssConn.Connect()
+        # Execute your command
+        if self.__rssConn.Connecting():
+            Domoticz.Debug("onHeartbeat called, Connecting.")
+        elif self.__rssConn.Connected():
+            Domoticz.Debug("onHeartbeat called, Connection is alive.")
         else:
-            Domoticz.Debug("onHeartbeat called, run again in " + str(self.__runAgain) + " heartbeats.")
+            if self.__runAgain <= 0:
+                Domoticz.Debug("onHeartbeat called, Reconnect.")
+                self.__runAgain = self.__HEARTBEATS2MIN * self.__MINUTES
+                self.__rssConn.Connect()
+        Domoticz.Debug("onHeartbeat called, run again in " + str(self.__runAgain) + " heartbeats.")
 
 
 global _plugin
