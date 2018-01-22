@@ -58,7 +58,8 @@ class BasePlugin:
         # Domoticz.Debug("Image created. ID: "+str(image))
         # Validate parameters
         # Create devices
-        Domoticz.Device(Unit=self.__UNIT_TEXT, Name="Last", TypeName="Text", Used=1).Create()
+        if len(Devices) == 0:
+            Domoticz.Device(Unit=self.__UNIT_TEXT, Name="Last", TypeName="Text", Used=1).Create()
         # Log config
         DumpConfigToLog()
         # Connection
