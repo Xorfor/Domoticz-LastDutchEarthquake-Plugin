@@ -6,7 +6,7 @@
 # Author: Xorfor
 #
 """
-<plugin key="xfr_aardbeving" name="Dutch earthquakes" author="Xorfor" version="1.0.0" wikilink="https://github.com/Xorfor/Domoticz-LastDutchEarthquake-Plugin" externallink="http://www.knmi.nl/nederland-nu/seismologie/aardbevingen/laatste_beving">
+<plugin key="xfr_aardbeving" name="Dutch earthquakes" author="Xorfor" version="1.0.1" wikilink="https://github.com/Xorfor/Domoticz-LastDutchEarthquake-Plugin" externallink="http://www.knmi.nl/nederland-nu/seismologie/aardbevingen/laatste_beving">
     <params>
         <!--
         <param field="Address" label="IP Address" width="200px" required="true" default="127.0.0.1"/>
