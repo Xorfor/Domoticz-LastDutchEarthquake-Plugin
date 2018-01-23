@@ -14,3 +14,6 @@ The device show the following information about the last eartquake:
 - City (with link to Google maps)
 - Magnitude and type (tectonic or induced)
 - Depth
+
+## To do
+- [ ] Add extra Alert device, so users can use this in events for notifications
