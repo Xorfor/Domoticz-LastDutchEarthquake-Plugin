@@ -16,5 +16,5 @@ The device show the following information about the last eartquake:
 - Depth
 
 ## To do
-- [ ] Other source? Till now KNMI most actual in the Netherlands!
+- [ ] Other source? Till now, KNMI is the most actual and accurate source in the Netherlands!
 - [ ] Add extra Alert device, so users can use this in events for notifications
